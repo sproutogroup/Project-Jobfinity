@@ -4,16 +4,32 @@ Configuration settings for LinkedIn automation.
 
 import os
 from dotenv import load_dotenv
+import sys
 
-# Load environment variables
-load_dotenv()
+# Get the absolute path to the project root
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../.."))
+ENV_PATH = os.path.join(PROJECT_ROOT, '.env-dev')
+
+
+# Load the .env-dev file
+load_dotenv(dotenv_path=ENV_PATH)
+
+# Get API key with debug logging
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+if not GEMINI_API_KEY:
+    raise ValueError(f"GEMINI_API_KEY not found in environment. Please check {ENV_PATH}")
+
+# LLM Configuration
+LLM_MODEL = "gemini-1.5-flash"  # Default model for Gemini Pro
+LLM_TEMPERATURE = 0.7     # Default temperature for more creative responses
+LLM_MAX_TOKENS = 1000    # Maximum tokens for LLM responses
 
 # Chrome Configuration
 CHROME_HOST = "127.0.0.1"
 CHROME_DEBUG_PORT = "9222"
 CHROME_DRIVER_PATH = os.getenv(
     "CHROME_DRIVER_PATH",
-    "C:\\Users\\AISpr\\Downloads\\Compressed\\chromedriver-win64\\chromedriver-win64\\chromedriver.exe"
+    # "C:\Users\AISpr\Downloads\chromedriver-win64\chromedriver-win64\chromedriver.exe"
 )
 
 # Timing Configuration

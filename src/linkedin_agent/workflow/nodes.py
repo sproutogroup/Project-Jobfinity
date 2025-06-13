@@ -8,13 +8,19 @@ from ..config.settings import GEMINI_API_KEY, LLM_MODEL, LLM_TEMPERATURE, LLM_MA
 from .states import ProfileAnalysisState
 from .prompts import ANALYZE_PROFILE_PROMPT, SUMMARIZE_RESULTS_PROMPT
 
-# Initialize LLM
-llm = ChatGoogleGenerativeAI(
-    api_key=GEMINI_API_KEY,
-    model=LLM_MODEL,
-    temperature=LLM_TEMPERATURE,
-    max_output_tokens=LLM_MAX_TOKENS
-)
+# Initialize LLM with error handling
+if not GEMINI_API_KEY:
+    raise ValueError("GEMINI_API_KEY is not set. Please check your .env-dev file.")
+
+try:
+    llm = ChatGoogleGenerativeAI(
+        google_api_key=GEMINI_API_KEY,
+        model=LLM_MODEL,
+        temperature=LLM_TEMPERATURE,
+        max_output_tokens=LLM_MAX_TOKENS
+    )
+except Exception as e:
+    raise Exception(f"Failed to initialize ChatGoogleGenerativeAI: {str(e)}")
 
 async def load_profiles_node(state: ProfileAnalysisState) -> Dict:
     """

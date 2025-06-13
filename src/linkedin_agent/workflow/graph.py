@@ -13,7 +13,7 @@ from .nodes import (
     summarize_results_node
 )
 
-def create_analysis_workflow() -> StateGraph:
+def create_workflow() -> StateGraph:
     """
     Creates and configures the profile analysis workflow graph.
     

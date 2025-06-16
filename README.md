@@ -1,4 +1,4 @@
-# LinkedIn Lead Generation Agent
+
 
 A Python-based LinkedIn automation tool that combines web scraping with intelligent profile analysis using LLMs.
 
